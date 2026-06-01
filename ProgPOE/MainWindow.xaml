@@ -1,0 +1,240 @@
+﻿<Window x:Class="ProgPOE.MainWindow"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Cybersecurity Awareness Bot" 
+        Height="650" Width="800"
+        WindowStartupLocation="CenterScreen"
+        Background="#1E1E1E">
+
+    <Window.Resources>
+        <!-- QuickTipButton Style defined FIRST before being used -->
+        <Style x:Key="QuickTipButton" TargetType="Button">
+            <Setter Property="Background" Value="#3D3D3D"/>
+            <Setter Property="Foreground" Value="#4CAF50"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#4CAF50"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Margin" Value="5,0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#4CAF50"/>
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- ASCII Art Header -->
+        <Border Grid.Row="0" Background="#2D2D2D" CornerRadius="10" Margin="5" Padding="10">
+            <TextBlock x:Name="AsciiArt" 
+                       Text=" _____     _      _     _                   _    _            _   
+|_   _|   | |    | |   | |                 | |  | |          | |  
+  | | ___ | | ___| |__ | |_ ___ _ __   __ _| |__| | __ _  ___| |_ 
+  | |/ _ \| |/ _ \ '_ \| __/ _ \ '_ \ / _` |  __  |/ _` |/ _ \ __|
+  | | (_) | |  __/ |_) | ||  __/ | | | (_| | |  | | (_| |  __/ |_ 
+  \_/\___/|_|\___|_.__/ \__\___|_| |_|\__,_|_|  |_|\__,_|\___|\__|
+                                                                  
+           Cybersecurity Awareness Bot - Your Safety Companion"
+                       FontFamily="Consolas" 
+                       FontSize="12" 
+                       Foreground="#4CAF50" 
+                       TextWrapping="Wrap"/>
+        </Border>
+
+        <!-- Status Bar -->
+        <StatusBar Grid.Row="1" Background="#2D2D2D" Margin="5" Height="30">
+            <StatusBarItem>
+                <TextBlock x:Name="StatusText" Text="✅ Bot is ready" Foreground="#4CAF50"/>
+            </StatusBarItem>
+            <Separator/>
+            <StatusBarItem>
+                <TextBlock x:Name="MemoryStatus" Text="📝 No user data yet" Foreground="#FFC107"/>
+            </StatusBarItem>
+            <Separator/>
+            <StatusBarItem>
+                <TextBlock x:Name="SentimentStatus" Text="😐 Sentiment: Neutral" Foreground="#2196F3"/>
+            </StatusBarItem>
+        </StatusBar>
+
+        <!-- Chat Display Area -->
+        <Border Grid.Row="2" Background="#2D2D2D" CornerRadius="10" Margin="5">
+            <ScrollViewer x:Name="ChatScrollViewer" VerticalScrollBarVisibility="Auto">
+                <RichTextBox x:Name="ChatDisplay" 
+                             IsReadOnly="True" 
+                             Background="#2D2D2D" 
+                             BorderThickness="0"
+                             FontFamily="Segoe UI" 
+                             FontSize="14"
+                             Padding="10">
+                    <RichTextBox.Resources>
+                        <Style TargetType="{x:Type Paragraph}">
+                            <Setter Property="Margin" Value="0"/>
+                        </Style>
+                    </RichTextBox.Resources>
+                </RichTextBox>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Input Area -->
+        <Border Grid.Row="3" Background="#2D2D2D" CornerRadius="10" Margin="5" Padding="10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBox x:Name="UserInput" 
+                         Grid.Column="0"
+                         Height="40" 
+                         FontSize="14"
+                         Background="#3D3D3D"
+                         Foreground="White"
+                         BorderThickness="0"
+                         Padding="10"
+                         VerticalContentAlignment="Center"
+                         KeyDown="UserInput_KeyDown"/>
+
+                <Button x:Name="SendButton" 
+                        Grid.Column="1"
+                        Content="➤ Send" 
+                        Width="80" 
+                        Height="40" 
+                        Margin="10,0,0,0"
+                        Background="#4CAF50" 
+                        Foreground="White"
+                        FontWeight="Bold"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        Click="SendButton_Click"/>
+            </Grid>
+        </Border>
+
+        <!-- Quick Tips Area - Alternative without Style resource -->
+        <Border Grid.Row="4" Background="#2D2D2D" CornerRadius="10" Margin="5" Padding="10">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Text="💡 Quick topics: " Foreground="#FFC107" FontWeight="Bold" Margin="0,0,10,0"/>
+
+                <Button Content="password" 
+                Click="QuickTip_Click"
+                Background="#3D3D3D" 
+                Foreground="#4CAF50"
+                BorderThickness="1"
+                BorderBrush="#4CAF50"
+                Padding="10,5"
+                Margin="5,0"
+                Cursor="Hand"
+                FontSize="12">
+                    <Button.Resources>
+                        <Style TargetType="Button">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#4CAF50"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+
+                <Button Content="scam" 
+                Click="QuickTip_Click"
+                Background="#3D3D3D" 
+                Foreground="#4CAF50"
+                BorderThickness="1"
+                BorderBrush="#4CAF50"
+                Padding="10,5"
+                Margin="5,0"
+                Cursor="Hand"
+                FontSize="12">
+                    <Button.Resources>
+                        <Style TargetType="Button">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#4CAF50"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+
+                <Button Content="privacy" 
+                Click="QuickTip_Click"
+                Background="#3D3D3D" 
+                Foreground="#4CAF50"
+                BorderThickness="1"
+                BorderBrush="#4CAF50"
+                Padding="10,5"
+                Margin="5,0"
+                Cursor="Hand"
+                FontSize="12">
+                    <Button.Resources>
+                        <Style TargetType="Button">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#4CAF50"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+
+                <Button Content="phishing tip" 
+                Click="QuickTip_Click"
+                Background="#3D3D3D" 
+                Foreground="#4CAF50"
+                BorderThickness="1"
+                BorderBrush="#4CAF50"
+                Padding="10,5"
+                Margin="5,0"
+                Cursor="Hand"
+                FontSize="12">
+                    <Button.Resources>
+                        <Style TargetType="Button">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#4CAF50"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+
+                <Button Content="another tip" 
+                Click="QuickTip_Click"
+                Background="#3D3D3D" 
+                Foreground="#4CAF50"
+                BorderThickness="1"
+                BorderBrush="#4CAF50"
+                Padding="10,5"
+                Margin="5,0"
+                Cursor="Hand"
+                FontSize="12">
+                    <Button.Resources>
+                        <Style TargetType="Button">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#4CAF50"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
